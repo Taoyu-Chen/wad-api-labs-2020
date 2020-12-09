@@ -21,7 +21,7 @@ export const getMovies = () => {
       `https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.TMDB_KEY}&language=en-US`
     )
       .then(res => res.json())
-      .then(json => json.results);
+      .then(json => json.genres);
   };
 
   export const getMovieReviews = id => {
