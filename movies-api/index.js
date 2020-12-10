@@ -6,6 +6,8 @@ import './db';
 import { loadUsers } from './seedData';
 import usersRouter from './api/users';
 import genresRouter from './api/genres';
+import session from 'express-session';
+import authenticate from './authenicate';
 
 dotenv.config();
 
@@ -28,12 +30,19 @@ const app = express();
 //configure body-parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+//session middleware
+app.use(session({
+  secret: 'ilikecake',
+  resave: true,
+  saveUninitialized: true
+}));
 
 // eslint-disable-next-line no-undef
 const port = process.env.PORT;
 
 app.use(express.static('public'));
-app.use('/api/movies', moviesRouter);
+
+app.use('/api/movies', authenticate, moviesRouter);
 app.use('/api/genres', genresRouter);
 app.use('/api/users', usersRouter);
 app.use(errHandler);
