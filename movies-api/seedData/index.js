@@ -4,18 +4,11 @@ const users = [
   {
     'username': 'user1',
     'password': 'test1',
-    'favourites': {
-      'id': '101',
-      'title': 'the min'
-    },
+
   },
   {
     'username': 'user2',
     'password': 'test2',
-    'favourites': {
-      'id': '102',
-      'title': 'the max'
-    },
   },
 ];
 
