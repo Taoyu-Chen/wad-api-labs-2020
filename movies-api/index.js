@@ -7,7 +7,8 @@ import { loadUsers } from './seedData';
 import usersRouter from './api/users';
 import genresRouter from './api/genres';
 import session from 'express-session';
-import authenticate from './authenicate';
+// replace existing import with passport strategy​
+import passport from './authenicate';
 
 dotenv.config();
 
@@ -37,12 +38,16 @@ app.use(session({
   saveUninitialized: true
 }));
 
+// initialise passport
+app.use(passport.initialize());
+
 // eslint-disable-next-line no-undef
 const port = process.env.PORT;
 
 app.use(express.static('public'));
 
-app.use('/api/movies', authenticate, moviesRouter);
+// Add passport.authenticate(..)  to middleware stack for protected routes​
+app.use('/api/movies', passport.authenticate('jwt', {session: false}), moviesRouter);
 app.use('/api/genres', genresRouter);
 app.use('/api/users', usersRouter);
 app.use(errHandler);
