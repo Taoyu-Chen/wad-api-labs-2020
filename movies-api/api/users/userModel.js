@@ -10,6 +10,11 @@ const UserSchema = new Schema({
     favourites: [{type: mongoose.Schema.Types.ObjectId, ref: 'Movies'}]
 });
 
+UserSchema.path('password').validate((value) => {
+    const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/;
+    return re.test(value);
+}, 'Your password is is bad password');
+
 UserSchema.statics.findByUserName = function (username) {
     return this.findOne({ username: username });
 };

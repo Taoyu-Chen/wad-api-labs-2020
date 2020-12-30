@@ -25,11 +25,18 @@ router.put('/:id',  (req, res, next) => {
 router.post('/:userName/favourites', async (req, res, next) => {
   const newFavourite = req.body.id;
   const userName = req.params.userName;
-  const movie = await movieModel.findByMovieDBId(newFavourite);
-  const user = await User.findByUserName(userName);
-  await user.favourites.push(movie._id);
-  await user.save(); 
-  res.status(201).json(user); 
+  try {
+    const movie = await movieModel.findByMovieDBId(newFavourite);
+    const user = await User.findByUserName(userName);
+    if(user.favourites.indexOf(movie._id) == -1) {
+      await user.favourites.push(movie._id);
+      await user.save();
+    }
+    res.status(201).json(user);
+  } catch (err){
+    return next(err);
+  }
+  
 });
 
 router.get('/:userName/favourites', (req, res, next) => {
