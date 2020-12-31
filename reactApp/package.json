@@ -2,7 +2,6 @@
   "name": "routing-samples",
   "version": "0.1.0",
   "private": true,
-  "proxy":"http://localhost:8080",
   "dependencies": {
     "bootstrap": "^4.3.1",
     "react": "^16.13.1",
@@ -27,6 +26,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "proxy": "http://localhost:8080"
-}
+  }
+,"proxy":"http://localhost:8080"}
